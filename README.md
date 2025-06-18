@@ -1,4 +1,4 @@
-# EvOps
+# EvOps :whale:
 
 ## Development Notice
 
@@ -19,8 +19,10 @@
   git clone --recurse-submodules https://github.com/IU-Capstone-Project-2025/evops.git
   ```
 
-- Set up the [`.env`](/.env.example) and
-  [`backend/.env`](https://github.com/evops-sum25/evops-backend/blob/main/.env.example)
+- Set up the [`.env`](/.env.example),
+  [`backend/.env`](https://github.com/evops-sum25/evops-backend/blob/main/.env.example),
+  and
+  [`ml/.env`](https://github.com/evops-sum25/evops-ml/blob/main/.env.example)
   files.
 
 - Run the app with Docker Compose.
@@ -28,9 +30,6 @@
   ```shell
   docker compose up --build
   ```
-
-  _Note that currently, the `network_mode` is set to `host`, which may not work
-  correctly on Windows machines._
 
 The services will be available on the following URLs:
 
