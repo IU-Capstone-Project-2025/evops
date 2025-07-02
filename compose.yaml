@@ -1,3 +1,14 @@
+x-minio-common: &minio-common
+  image: quay.io/minio/minio:latest
+  command: server --console-address ":9090" /minio1/mnt/data
+  ports:
+    - "9000:9000"
+    - "9090:9090"
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+    interval: 30s
+    timeout: 20s
+    retries: 3
 services:
   postgres:
     image: postgres:17.5-bookworm
@@ -24,6 +35,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      minio1:
+        condition: service_healthy
     env_file:
       - backend/.env
     ports:
@@ -48,6 +61,17 @@ services:
       - ml/.env
     ports:
       - 50051:50051
+
+  minio1:
+    <<: *minio-common
+    hostname: minio1
+    volumes:
+      - type: bind
+        source: /mnt/data/compose
+        target: /mnt/data
+      - type: bind
+        source: /etc/default/minio
+        target: /etc/config.env
 
 volumes:
   pgdata:
